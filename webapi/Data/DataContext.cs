@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-
+using webapi.Models;
 
 namespace webapi.Data
 {
@@ -8,5 +8,6 @@ namespace webapi.Data
         public DataContext(DbContextOptions<DataContext> options) : base (options){}
         
         public DbSet<Valores>  Valores {get;set;}  
+        public DbSet<Usuario> Usuarios {get; set;}
     }
 }
