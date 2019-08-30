@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+
+    <div class="container">
+        <a class="navbar-brand" href="#">CitasWeb</a>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto" *ngIf="logueado()">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Partidos <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Listas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Mensajes</a>
+                </li>
+
+            </ul>
+
+            <div class="dropdown mt-4" dropdown *ngIf="logueado()">
+                <a dropdownToggle class="text-light dropdown-toggle">
+            Bienvenido {{authServicio.DecodeToken.unique_name | titlecase}} <span class="caret"></span>
+             </a>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem"><a class="dropdown-item" href="#"><i class="fa fa-user"></i> Perfil</a></li>
+                    <li class="divider dropdown-divider"></li>
+                    <li role="menuitem" (click)="Logout()"><a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+        <form *ngIf="!logueado()" class="form-inline mt-2 mt-md-0" #formLogin="ngForm" (submit)="login()">
+            <input class="form-control mr-sm-2" type="text" placeholder="nombre" required name="nombre" #usuario="ngModel" [(ngModel)]="model.nombre">
+            <input class="form-control mr-sm-2" type="password" placeholder="password" required name="password" #password="ngModel" [(ngModel)]="model.password">
+            <button [disabled]="formLogin.invalid" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Login</button>
+        </form>
+    </div>
+
+
+
+</nav>

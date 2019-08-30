@@ -1,0 +1,20 @@
+<div class="container mt-5">
+    <div style="text-align: center" *ngIf="!modoregistro">
+        <h1>
+            Encuentra tu pareja</h1>
+        <p class="lead">
+            Entra para ver tus partidos ... ¡Todo lo que necesitas hacer es registrarte!</p>
+        <div class="text-center">
+            <button class="btn btn-primary btn-lg mr-2" (click)=registrotoogle()>Registro</button>
+            <button class="btn btn-info btn-lg">Leer mas</button>
+        </div>
+    </div>
+
+    <div class="container" *ngIf="modoregistro">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <app-registro (cancelRegistro)="cancelRegistroMode($event)"></app-registro>
+            </div>
+        </div>
+    </div>
+</div>
