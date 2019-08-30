@@ -9,6 +9,10 @@ import { InicioComponent } from './Components/inicio/inicio.component';
 import { RegistroComponent } from './Components/registro/registro.component';
 import { ErrorInterceptorProvider } from './Servicios/auth.interceptor';
 import { BsDropdownModule } from 'ngx-bootstrap';
+import { HomeComponent } from './Components/home/home.component';
+import { MiembrosListaComponent } from './Components/miembros-lista/miembros-lista.component';
+import { ListasComponent } from './Components/listas/listas.component';
+import { MensajesComponent } from './Components/mensajes/mensajes.component';
 
 
 @NgModule({
@@ -16,7 +20,12 @@ import { BsDropdownModule } from 'ngx-bootstrap';
     AppComponent,
     NavComponent,
     InicioComponent,
-    RegistroComponent
+    RegistroComponent,
+    HomeComponent,
+    MiembrosListaComponent,
+    ListasComponent,
+    MensajesComponent
+    
   ],
   imports: [
     BrowserModule,
