@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../Servicios/auth.service';
 import { AlertasService } from '../../Servicios/alertas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -11,7 +12,8 @@ export class NavComponent implements OnInit {
    model: any = {};
    token: '';
   constructor(public authServicio: AuthService,
-              private alertas: AlertasService) { }
+              private alertas: AlertasService,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -30,5 +32,6 @@ export class NavComponent implements OnInit {
   Logout() {
     localStorage.removeItem('token');
     this.alertas.info('Cerrando Sesión');
+    this.router.navigate(['/']);
   }
 }

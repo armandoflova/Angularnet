@@ -1,0 +1,15 @@
+<div class="card mb-4" style="width: 18rem;">
+    <div class="card-img-wrapper">
+        <img [src]="Usuario.url" class="card-img-top" [alt]="Usuario.nombre">
+        <ul class="miembros-iconos animate">
+            <li class="list-inline-item"><button class="btn btn-primary" [routerLink]="['/miembros/', Usuario.id]"><i class="fa fa-user"></i></button></li>
+            <li class="list-inline-item"><button class="btn btn-primary"><i class="fa fa-heart"></i></button></li>
+            <li class="list-inline-item"><button class="btn btn-primary"><i class="fa fa-envelope"></i></button></li>
+        </ul>
+    </div>
+    <div class="card-body p-1">
+        <h5 class="card-title text-center mb-1"><i class="fa fa-user"></i> {{Usuario.nombre}} {{Usuario.edad}}</h5>
+        <p class="card-text text-muted text-center">{{Usuario.city}}-{{Usuario.pais}}</p>
+        <a href="#" class="btn btn-primary btn-block">Detalle Usuario</a>
+    </div>
+</div>

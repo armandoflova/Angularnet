@@ -1,41 +1,67 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './Components/nav/nav.component';
 import {HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+import { NgxGalleryModule } from 'ngx-gallery';
 import { InicioComponent } from './Components/inicio/inicio.component';
 import { RegistroComponent } from './Components/registro/registro.component';
 import { ErrorInterceptorProvider } from './Servicios/auth.interceptor';
-import { BsDropdownModule } from 'ngx-bootstrap';
-import { HomeComponent } from './Components/home/home.component';
-import { MiembrosListaComponent } from './Components/miembros-lista/miembros-lista.component';
+import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { MiembrosListaComponent } from './Components/miembros/miembros-lista/miembros-lista.component';
 import { ListasComponent } from './Components/listas/listas.component';
 import { MensajesComponent } from './Components/mensajes/mensajes.component';
+import { TarjetaMiembrosComponent } from './Components/miembros/tarjeta-miembros/tarjeta-miembros.component';
+import { MiembrosDetalleComponent } from './Components/miembros/miembros-detalle/miembros-detalle.component';
+import { MiembrosDetalleResolver } from './Resolver/miembros-detalle.Resolver';
+import { MiembrosResolver } from './Resolver/miembros.resolver';
 
-
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
+export class CustomHammerConfig extends HammerGestureConfig {
+  overrides = {
+      pinch: { enable: false },
+      rotate: { enable: false }
+  };
+}
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     InicioComponent,
     RegistroComponent,
-    HomeComponent,
     MiembrosListaComponent,
     ListasComponent,
-    MensajesComponent
-    
+    MensajesComponent,
+    TarjetaMiembrosComponent,
+    MiembrosDetalleComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BsDropdownModule.forRoot()
+    NgxGalleryModule,
+    TabsModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        // tslint:disable-next-line: object-literal-shorthand
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/api/Auth']
+      }
+    })
     ],
   providers: [
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    MiembrosDetalleResolver,
+    MiembrosResolver,
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]
 })

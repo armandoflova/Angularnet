@@ -168,6 +168,23 @@
             "EsPrincipal": true,
             "Descripcion": "Non laborum commodo dolor non id aliqua reprehenderit et ipsum adipisicing sint occaecat irure."
         }]
+    },
+    {
+        "Nombre": "Armando",
+        "Password": "fvsa123fvsa",
+        "Genero": "masculino",
+        "FechaNacimiento": "1988-05-18",
+        "Creado": "2017-02-05",
+        "Introduccion": "Aute eu aliqua fugiat laboris. Commodo amet ullamco nostrud non cupidatat in nisi et commodo minim ipsum. Minim irure ut ipsum adipisicing et consequat irure in commodo. Laborum fugiat aliqua esse do enim eiusmod mollit tempor enim aliqua duis dolor ullamco aliqua. Eiusmod pariatur fugiat magna voluptate occaecat occaecat occaecat cillum commodo officia pariatur. Labore ipsum ex et in duis enim voluptate non enim reprehenderit. Est dolore consectetur Lorem pariatur aliquip amet velit.\r\n",
+        "BuscarPor": "Proident voluptate sint fugiat ad id sint nulla aliquip dolor nostrud aliqua nisi duis est. Pariatur irure laboris consectetur sit anim veniam. Consectetur officia excepteur minim ex irure ex amet eiusmod dolore nisi. Excepteur ad commodo exercitation eu voluptate laboris. Nostrud Lorem excepteur voluptate proident laboris veniam ad id fugiat ullamco quis proident consequat veniam.\r\n",
+        "Intereses": "Dolore non sit occaecat dolor veniam duis enim.",
+        "City": "Trujillo",
+        "Pais": "Perú",
+        "Fotos": [{
+            "Url": "https://www.facebook.com/photo.php?fbid=1276593765695165&set=a.147536741934212&type=3&theater",
+            "EsPrincipal": true,
+            "Descripcion": "Non laborum commodo dolor non id aliqua reprehenderit et ipsum adipisicing sint occaecat irure."
+        }]
     }
 
 ]
