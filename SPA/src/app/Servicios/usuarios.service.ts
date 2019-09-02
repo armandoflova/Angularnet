@@ -20,4 +20,7 @@ export class UsuariosService {
   ObtenerUsuario(id): Observable<Usuario> {
     return this.http.get<Usuario>(environment.Urlapi + 'Usuario/' + id );
   }
+   EditarUsuario(id: number, usuario: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(environment.Urlapi + 'Usuario/' +  id, usuario );
+  }
 }

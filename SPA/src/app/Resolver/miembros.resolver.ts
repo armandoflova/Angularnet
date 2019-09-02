@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/Operators';
 
 
 @Injectable()
-export class MiembrosResolver implements Resolve<Usuario[]>{
+export class MiembrosResolver implements Resolve<Usuario[]> {
 
     constructor(private usuarioServicio: UsuariosService,
                 private router: Router,

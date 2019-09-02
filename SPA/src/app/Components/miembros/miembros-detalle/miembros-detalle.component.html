@@ -10,11 +10,11 @@
                     </div>
                     <div>
                         <strong>Ultima Conexión:</strong>
-                        <p>{{usuario.ultimaconexion}}</p>
+                        <p>{{usuario.ultimaConexion | date : 'dd/MM/yyyy'}}</p>
                     </div>
                     <div>
                         <strong>Miembro hace:</strong>
-                        <p>{{usuario.creado}}</p>
+                        <p>{{usuario.creado | date : 'dd/MM/yyyy' }}</p>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -32,7 +32,7 @@
                         <h4>Descripción</h4>
                         <p>{{usuario.introduccion}}</p>
                         <h4>Buscar Por</h4>
-                        <p>{{usuario.introduccion}}</p>
+                        <p>{{usuario.buscarPor}}</p>
                     </tab>
                     <tab heading="Intereses">
                         <h4>Intereses: </h4>

@@ -13,7 +13,7 @@ export class AuthService {
    DecodeToken: any;
   constructor(private http: HttpClient,
               private router: Router) { }
- 
+
 
   Registar(model: any) {
   return this.http.post(environment.Urlapi + 'Auth/Registro', model);

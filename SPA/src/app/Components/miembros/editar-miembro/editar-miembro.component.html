@@ -1,0 +1,69 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <h3 class="text-center">Mi Perfil</h3>
+        </div>
+        <div class="col-sm-12 col-md-8" *ngIf="formEditar.dirty">
+            <div class="alert alert-info" role="alert">
+                <strong>Informacion:</strong> Los cambios aún no han sido guardados
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+            <div class="card">
+                <img class="card-img-top img-thumbnail" src="{{usuario.url}}" alt="{{usuario.alias}}">
+                <div class="card-body">
+                    <div>
+                        <strong>Ubicación:</strong>
+                        <p>{{usuario.city}} , {{usuario.pais}}</p>
+                    </div>
+                    <div>
+                        <strong>Ultima Conexión:</strong>
+                        <p>{{usuario.ultimaConexion | date : 'dd/MM/yyyy'}}</p>
+                    </div>
+                    <div>
+                        <strong>Miembro hace:</strong>
+                        <p>{{usuario.creado | date : 'dd/MM/yyyy' }}</p>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-success btn-block" type="submit" form="formEditar" [disabled]="!formEditar.dirty">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12">
+            <div class="tab-panel">
+                <tabset class="member-tabset">
+                    <tab heading="Editar Perfil">
+                        <form #formEditar="ngForm" id="formEditar" (submit)="Editar()">
+                            <h4>Descripción:</h4>
+                            <textarea class="form-control" rows="6" name="introduccion" [(ngModel)]="usuario.introduccion">
+
+                            </textarea>
+                            <h4>Buscar Por:</h4>
+                            <textarea class="form-control" rows="6" name="buscarPor" [(ngModel)]="usuario.buscarPor">
+
+                            </textarea>
+                            <h4>Intereses:</h4>
+                            <textarea class="form-control" rows="6" name="intereses" [(ngModel)]="usuario.intereses">
+
+                            </textarea>
+                            <h4>Detalles de Ubicación:</h4>
+                            <div class="form-inline">
+                                <label for="city">Ciudad:</label>
+                                <input type="text" name="city" class="form-control" [(ngModel)]="usuario.city">
+                                <label for="Pais">Pais:</label>
+                                <input type="text" name="pais" class="form-control" [(ngModel)]="usuario.pais">
+                            </div>
+                        </form>
+                    </tab>
+                    <tab heading="Editar Fotos">
+                        <p> a qui iran las fotos</p>
+                    </tab>
+
+                </tabset>
+            </div>
+        </div>
+    </div>
+</div>

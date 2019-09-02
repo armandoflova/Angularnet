@@ -5,19 +5,21 @@ import { UsuariosService } from '../Servicios/usuarios.service';
 import { AlertasService } from '../Servicios/alertas.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/Operators';
+import { AuthService } from '../Servicios/auth.service';
 
 
 @Injectable()
-export class MiembrosDetalleResolver implements Resolve<Usuario> {
+export class MiembrosEditarResolve implements Resolve<Usuario> {
 
     constructor(private usuarioServicio: UsuariosService,
                 private router: Router,
-                private alertas: AlertasService) {}
+                private alertas: AlertasService,
+                private authservicio: AuthService) {}
 
 resolve(route: ActivatedRouteSnapshot): Observable<Usuario> {
-    return this.usuarioServicio.ObtenerUsuario(route.params['id'])
+    return this.usuarioServicio.ObtenerUsuario(this.authservicio.DecodeToken.nameid)
     .pipe( catchError (error => {
-        this.alertas.error('Hubo un error al cargar los datos');
+        this.alertas.error('hubo un error al recibir los datos');
         this.router.navigate(['/miembros']);
         return of(null);
     })

@@ -18,6 +18,9 @@ import { TarjetaMiembrosComponent } from './Components/miembros/tarjeta-miembros
 import { MiembrosDetalleComponent } from './Components/miembros/miembros-detalle/miembros-detalle.component';
 import { MiembrosDetalleResolver } from './Resolver/miembros-detalle.Resolver';
 import { MiembrosResolver } from './Resolver/miembros.resolver';
+import { EditarMiembroComponent } from './Components/miembros/editar-miembro/editar-miembro.component';
+import { MiembrosEditarResolve } from './Resolver/miembros-editar.resolver';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -38,7 +41,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     ListasComponent,
     MensajesComponent,
     TarjetaMiembrosComponent,
-    MiembrosDetalleComponent
+    MiembrosDetalleComponent,
+    EditarMiembroComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +65,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     ErrorInterceptorProvider,
     MiembrosDetalleResolver,
     MiembrosResolver,
+     MiembrosEditarResolve,
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]

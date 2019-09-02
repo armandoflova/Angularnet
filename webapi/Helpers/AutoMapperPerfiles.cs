@@ -20,6 +20,7 @@ namespace webapi.Helpers
             .ForMember(dest => dest.Edad , opt => opt.MapFrom( src => 
             src.FechaNacimiento.CalcularEdad())); 
             CreateMap<Foto , FotosDetalles>();
+            CreateMap<UsuarioEditar , Usuario>();
         }
     }
 }

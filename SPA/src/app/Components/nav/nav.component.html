@@ -22,7 +22,7 @@
             Bienvenido {{authServicio.DecodeToken.unique_name | titlecase}} <span class="caret"></span>
              </a>
                 <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                    <li role="menuitem"><a class="dropdown-item" href="#"><i class="fa fa-user"></i> Perfil</a></li>
+                    <li role="menuitem"><a class="dropdown-item" [routerLink]="['/editar']"><i class="fa fa-user"></i> Perfil</a></li>
                     <li class="divider dropdown-divider"></li>
                     <li role="menuitem" (click)="Logout()"><a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
                     </li>

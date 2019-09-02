@@ -9,6 +9,12 @@ import { InicioComponent } from './Components/inicio/inicio.component';
 import { MiembrosDetalleComponent } from './Components/miembros/miembros-detalle/miembros-detalle.component';
 import { MiembrosDetalleResolver } from './Resolver/miembros-detalle.Resolver';
 import { MiembrosResolver } from './Resolver/miembros.resolver';
+import { EditarMiembroComponent } from './Components/miembros/editar-miembro/editar-miembro.component';
+import { MiembrosEditarResolve } from './Resolver/miembros-editar.resolver';
+import { GuardarCambiosGuard } from './Guard/guardar-cambios.guard';
+
+
+
 
 
 const routes: Routes = [
@@ -20,6 +26,8 @@ const routes: Routes = [
     children: [
       {path: 'miembros' , component: MiembrosListaComponent , resolve: {usuarios: MiembrosResolver}},
       {path: 'miembros/:id' , component: MiembrosDetalleComponent , resolve: {usuario: MiembrosDetalleResolver}},
+      {path: 'editar' , component: EditarMiembroComponent, resolve: {usuario: MiembrosEditarResolve},
+       canDeactivate: [GuardarCambiosGuard] },
       {path: 'mensajes' , component: MensajesComponent},
       {path: 'listas' , component: ListasComponent}
     ]
