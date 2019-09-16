@@ -11,5 +11,7 @@ namespace webapi.Data
         Task<bool> GuardarTodo();
         Task<IEnumerable> ObtenerUsarios();
         Task<Usuario> ObtenerUsuario(int id);
+        Task<Foto> ObtenerFoto(int id);
+        Task<Foto> ObtenerFotoActual(int idUsario);
     }
 }

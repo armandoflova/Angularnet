@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using webapi.Models;
@@ -38,6 +39,18 @@ namespace webapi.Data
         {
             var usuario =await _context.Usuarios.Include(F => F.Fotos).FirstOrDefaultAsync(u => u.Id == id);
             return usuario;
+        }
+
+        public async Task<Foto> ObtenerFoto(int id)
+        {
+            var foto = await _context.Fotos.FirstOrDefaultAsync(f => f.Id == id);
+            return foto;
+        }
+
+        public async Task<Foto> ObtenerFotoActual(int idUsario)
+        {
+            var fotoActual = await _context.Fotos.Where(u => u.UsuarioID == idUsario).FirstOrDefaultAsync(f => f.EsPrincipal);
+            return fotoActual;
         }
     }
 }

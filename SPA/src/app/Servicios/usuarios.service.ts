@@ -23,4 +23,11 @@ export class UsuariosService {
    EditarUsuario(id: number, usuario: Usuario): Observable<Usuario> {
     return this.http.put<Usuario>(environment.Urlapi + 'Usuario/' +  id, usuario );
   }
+  FotoPrincipal(idUsuario: number, id: number): Observable<any> {
+    return this.http.post(environment.Urlapi + 'usuarios/' + idUsuario + '/fotos/' + id + '/esPrincipal' , {});
+  }
+
+  EliminarFoto(idUsuario: number , id: number){
+    return this.http.delete(environment.Urlapi + 'usuarios/' + idUsuario + '/fotos/' + id);
+  }
 }

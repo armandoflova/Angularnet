@@ -1,6 +1,7 @@
 import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './Components/nav/nav.component';
@@ -20,6 +21,9 @@ import { MiembrosDetalleResolver } from './Resolver/miembros-detalle.Resolver';
 import { MiembrosResolver } from './Resolver/miembros.resolver';
 import { EditarMiembroComponent } from './Components/miembros/editar-miembro/editar-miembro.component';
 import { MiembrosEditarResolve } from './Resolver/miembros-editar.resolver';
+import {MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import { FotoEditorComponent } from './Components/miembros/foto-editor/foto-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 export function tokenGetter() {
@@ -42,14 +46,24 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MensajesComponent,
     TarjetaMiembrosComponent,
     MiembrosDetalleComponent,
-    EditarMiembroComponent
+    EditarMiembroComponent,
+    FotoEditorComponent
+    
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
     NgxGalleryModule,
+    MatTableModule,
+    MatPaginatorModule,
+    FileUploadModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSortModule,
     TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     JwtModule.forRoot({

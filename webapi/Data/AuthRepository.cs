@@ -22,7 +22,7 @@ namespace webapi.Data
 
         public async  Task<Usuario> Login(string nombre, string password)
         {
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(x => x.Nombre == nombre);
+            var usuario = await _context.Usuarios.Include(u => u.Fotos).FirstOrDefaultAsync(x => x.Nombre == nombre);
             if(usuario == null)
                 return null;
             if (!verificarPasswoordHash(password, usuario.PasswordHash, usuario.PasswordSalt))

@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-4">
             <div class="card">
-                <img class="card-img-top img-thumbnail" src="{{usuario.url}}" alt="{{usuario.alias}}">
+                <img class="card-img-top img-thumbnail" src="{{fotoUrl}}" alt="{{usuario.alias}}">
                 <div class="card-body">
                     <div>
                         <strong>Ubicación:</strong>
@@ -59,7 +59,7 @@
                         </form>
                     </tab>
                     <tab heading="Editar Fotos">
-                        <p> a qui iran las fotos</p>
+                        <app-foto-editor [Fotos]="usuario.fotos"></app-foto-editor>
                     </tab>
 
                 </tabset>

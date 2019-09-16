@@ -3,5 +3,5 @@ export interface Foto {
     url: string;
     descripcion: string;
     fechaAgregada: string;
-    esPrincipal: string;
+    esPrincipal: boolean;
 }

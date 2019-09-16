@@ -11,15 +11,17 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
    model: any = {};
    token: '';
+   fotoUrl: string;
   constructor(public authServicio: AuthService,
               private alertas: AlertasService,
               private router: Router) { }
 
   ngOnInit() {
+    this.authServicio.fotoUrl.subscribe(fotourl => this.fotoUrl = fotourl);
   }
   login() {
     this.authServicio.login(this.model).subscribe(next => {
-     this.alertas.exito('Se logueo de mnaera correcta');
+     this.alertas.exito('Se logueo de manera correcta');
         }, error => {
       this.alertas.error(error);
     });
@@ -31,6 +33,9 @@ export class NavComponent implements OnInit {
 
   Logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+    this.authServicio.usuarioActual = null;
+    this.authServicio.DecodeToken = null;
     this.alertas.info('Cerrando Sesión');
     this.router.navigate(['/']);
   }

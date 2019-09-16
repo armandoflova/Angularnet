@@ -18,6 +18,9 @@
             </ul>
 
             <div class="dropdown mt-4" dropdown *ngIf="logueado()">
+                <span class="mr-1">
+                    <img src="{{fotoUrl}}" class="img">
+                </span>
                 <a dropdownToggle class="text-light dropdown-toggle">
             Bienvenido {{authServicio.DecodeToken.unique_name | titlecase}} <span class="caret"></span>
              </a>
@@ -34,7 +37,7 @@
         <form *ngIf="!logueado()" class="form-inline mt-2 mt-md-0" #formLogin="ngForm" (submit)="login()">
             <input class="form-control mr-sm-2" type="text" placeholder="nombre" required name="nombre" #usuario="ngModel" [(ngModel)]="model.nombre">
             <input class="form-control mr-sm-2" type="password" placeholder="password" required name="password" #password="ngModel" [(ngModel)]="model.password">
-            <button [disabled]="formLogin.invalid" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Login</button>
+            <button [disabled]="formLogin.invalid" class="btn btn-light my-2 my-sm-0" type="submit">Login</button>
         </form>
     </div>
 

@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -18,9 +19,11 @@ namespace webapi.Controllers
     {
         public IAuthRepository _repo { get; }
         public IConfiguration _config { get; }
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public IMapper _mapper { get; }
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
-            _config= config;
+            _mapper = mapper;
+            _config = config;
             _repo = repo;
 
         }
@@ -50,34 +53,37 @@ namespace webapi.Controllers
 
         public async Task<IActionResult> Login(UsuarioLogin usuariologin)
         {
-                var usuario = await _repo.Login(usuariologin.nombre.ToLower(), usuariologin.password);
-                if (usuario == null){
-                    return Unauthorized();
-                }
-                var claims = new[]
-                {
-                new Claim(ClaimTypes.NameIdentifier , usuario.Id.ToString()),
-                new Claim(ClaimTypes.Name, usuario.Nombre)
+            var usuariorepo = await _repo.Login(usuariologin.nombre.ToLower(), usuariologin.password);
+            if (usuariorepo == null)
+            {
+                return Unauthorized();
+            }
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier , usuariorepo.Id.ToString()),
+                new Claim(ClaimTypes.Name, usuariorepo.Nombre)
                 };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF32.GetBytes(_config.GetSection("AppSettings:token").Value));
+            var key = new SymmetricSecurityKey(Encoding.UTF32.GetBytes(_config.GetSection("AppSettings:token").Value));
 
-                var creds = new SigningCredentials( key, SecurityAlgorithms.HmacSha256Signature);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
-                var tokenDescriptor  = new SecurityTokenDescriptor
-                {
-                    Subject = new  ClaimsIdentity(claims),
-                    Expires = DateTime.Now.AddDays(1),
-                    SigningCredentials = creds
-                };
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = creds
+            };
 
-                var tokenhandler = new JwtSecurityTokenHandler();
+            var tokenhandler = new JwtSecurityTokenHandler();
 
-                var token = tokenhandler.CreateToken(tokenDescriptor);
-
-                return Ok(new {
-                    token = tokenhandler.WriteToken(token)
-                });
+            var token = tokenhandler.CreateToken(tokenDescriptor);
+            var usuario = _mapper.Map<UsuarioLista>(usuariorepo);
+            return Ok(new
+            {
+                token = tokenhandler.WriteToken(token), 
+                usuario
+            });
         }
     }
 }

@@ -1,8 +1,8 @@
 using System;
 
-namespace webapi.Models
+namespace webapi.Dtos
 {
-    public class Foto
+    public class fotoReturnRepo
     {
         public int Id { get; set; }
         public string Url { get; set; }
@@ -11,7 +11,5 @@ namespace webapi.Models
         public bool EsPrincipal {get; set;}
         public string PublicId { get; set; }
 
-        public Usuario Usuario {get; set;}
-        public int UsuarioID { get; set; }
     }
 }

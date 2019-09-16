@@ -21,6 +21,8 @@ namespace webapi.Helpers
             src.FechaNacimiento.CalcularEdad())); 
             CreateMap<Foto , FotosDetalles>();
             CreateMap<UsuarioEditar , Usuario>();
+           CreateMap<Foto, fotoReturnRepo>();
+           CreateMap<FotosCreacionDto, Foto>();
         }
     }
 }

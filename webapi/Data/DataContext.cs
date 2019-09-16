@@ -9,5 +9,6 @@ namespace webapi.Data
         
         public DbSet<Valores>  Valores {get;set;}  
         public DbSet<Usuario> Usuarios {get; set;}
+        public DbSet<Foto> Fotos {get; set;}
     }
 }

@@ -14,6 +14,7 @@ import { AuthService } from '../../../Servicios/auth.service';
 export class EditarMiembroComponent implements OnInit {
   @ViewChild('formEditar' , {static: true}) formEditar: NgForm;
   usuario: Usuario;
+  fotoUrl: string;
   @HostListener('window:beforeunload', ['$event'])
   unloadNotifation($event: any) {
     if (this.formEditar.dirty) {
@@ -29,6 +30,7 @@ export class EditarMiembroComponent implements OnInit {
     this.route.data.subscribe( data => {
       this.usuario = data['usuario'];
      });
+    this.auth.fotoUrl.subscribe(fotourl => this.fotoUrl = fotourl);
   }
   Editar() {
    this.usuarioServico.EditarUsuario(this.auth.DecodeToken.nameid, this.formEditar.value).subscribe(next => {
@@ -38,4 +40,5 @@ export class EditarMiembroComponent implements OnInit {
      this.alertas.error(error);
    });
   }
+
 }

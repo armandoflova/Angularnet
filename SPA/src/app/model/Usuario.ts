@@ -15,5 +15,4 @@ export interface Usuario  {
      pais: string;
      url: string;
      fotos: Foto[];
-
 }
