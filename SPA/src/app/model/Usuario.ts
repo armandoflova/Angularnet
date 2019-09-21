@@ -7,12 +7,12 @@ export interface Usuario  {
     edad: number;
     alias: string;
     creado: Date;
-     ultimaConexion: Date;
-     introduccion?: string;
-     buscarPor?: string;
-     intereses?: string;
-      city: string;
-     pais: string;
-     url: string;
-     fotos: Foto[];
+    ultimaConexion: Date;
+    introduccion?: string;
+    buscarPor?: string;
+    intereses?: string;
+    city: string;
+    pais: string;
+    url: string;
+    fotos: Foto[];
 }

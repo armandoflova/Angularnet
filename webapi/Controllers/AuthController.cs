@@ -38,14 +38,12 @@ namespace webapi.Controllers
             if (await _repo.ExisteUsuario(usuarioRegistro.nombre))
                 return BadRequest("Ya existe nombre de Usuario");
 
-            var usuario = new Usuario
-            {
-                Nombre = usuarioRegistro.nombre
-            };
+            var usuario = _mapper.Map<Usuario>(usuarioRegistro);
 
             var crearUsuario = await _repo.Registro(usuario, usuarioRegistro.password);
+             var usuarioReturn = _mapper.Map<Usuario>(crearUsuario);
 
-            return StatusCode(201);
+            return CreatedAtRoute("obtenerUsuario", new { Controller = "Usuario" , id = crearUsuario.Id}, usuarioReturn);
 
         }
 

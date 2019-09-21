@@ -19,7 +19,7 @@
 
             <div class="dropdown mt-4" dropdown *ngIf="logueado()">
                 <span class="mr-1">
-                    <img src="{{fotoUrl}}" class="img">
+                    <img src="{{fotoUrl ||'../../../../../assets/user.png'}}" class="img">
                 </span>
                 <a dropdownToggle class="text-light dropdown-toggle">
             Bienvenido {{authServicio.DecodeToken.unique_name | titlecase}} <span class="caret"></span>

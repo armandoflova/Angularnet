@@ -23,8 +23,8 @@ export class AuthService {
   cambiarFotoMiembro(fotourl: string) {
     this.fotoUrl.next(fotourl);
   }
-  Registar(model: any) {
-  return this.http.post(environment.Urlapi + 'Auth/Registro', model);
+  Registar(usuario: Usuario) {
+  return this.http.post(environment.Urlapi + 'Auth/Registro', usuario);
   }
 
   login(model: any) {

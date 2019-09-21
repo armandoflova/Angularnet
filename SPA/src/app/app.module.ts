@@ -21,7 +21,8 @@ import { MiembrosDetalleResolver } from './Resolver/miembros-detalle.Resolver';
 import { MiembrosResolver } from './Resolver/miembros.resolver';
 import { EditarMiembroComponent } from './Components/miembros/editar-miembro/editar-miembro.component';
 import { MiembrosEditarResolve } from './Resolver/miembros-editar.resolver';
-import {MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule,
+   MatInputModule, MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import { FotoEditorComponent } from './Components/miembros/foto-editor/foto-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
 
@@ -48,7 +49,6 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MiembrosDetalleComponent,
     EditarMiembroComponent,
     FotoEditorComponent
-    
   ],
   imports: [
     BrowserModule,
@@ -59,6 +59,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     FormsModule,
     NgxGalleryModule,
     MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatPaginatorModule,
     FileUploadModule,
     MatFormFieldModule,

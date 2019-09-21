@@ -1,13 +1,61 @@
-<form #formRegistro="ngForm" (submit)="Registrar()">
+<form [formGroup]="formRegistro" (submit)="Registrar()">
     <h2 class="text-center text-primary">Registro</h2>
     <hr>
 
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Nombre de Usuario" name="nombre" #nombre="ngModel" [(ngModel)]="model.nombre">
+
+
+        <div class="form-group">
+            <label class="control-label" style="margin-right:10px">Yo soy: </label>
+            <label class="radio-inline">
+             <input class="mr-3" type="radio" value="Masculino" formControlName="genero">Hombre
+             </label>
+            <label class="radio-inline ml-3">
+             <input class="mr-3" type="radio" value="Femenino" formControlName="genero">Mujer
+             </label>
+        </div>
+        <input [ngClass]="{'is-invalid': formRegistro.get('nombre').errors && formRegistro.get('nombre').touched}" type="text" class="form-control" placeholder="Nombre de Usuario" formControlName="nombre">
+        <div class="invalid-feedback">Es necesario ingresar un nombre</div>
+    </div>
+
+
+
+    <div class="form-group">
+        <input [ngClass]="{'is-invalid': formRegistro.get('alias').errors && formRegistro.get('alias').touched}" class="form-control" placeholder="Known as" formControlName="alias">
+        <div class="invalid-feedback" *ngIf="formRegistro.get('alias').touched && formRegistro.get('alias').hasError('required')">Alias es Requerido</div>
+    </div>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Elegir Fecha" required formControlName="fechaNacimiento">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error>Es necesarion ingresar Fecha</mat-error>
+    </mat-form-field>
+    <div class="form-group">
+        <input [ngClass]="{'is-invalid': formRegistro.get('city').errors && formRegistro.get('city').touched}" class="form-control" placeholder="City" formControlName="city">
+        <div class="invalid-feedback" *ngIf="formRegistro.get('city').touched && formRegistro.get('city').hasError('required')">Ciudad es Requerida</div>
     </div>
 
     <div class="form-group">
-        <input type="password" class="form-control" placeholder="Contraseña" name="password" #password="ngModel" [(ngModel)]="model.password">
+        <input [ngClass]="{'is-invalid': formRegistro.get('pais').errors && formRegistro.get('pais').touched}" class="form-control" placeholder="pais" formControlName="pais">
+        <div class="invalid-feedback" *ngIf="formRegistro.get('pais').touched && formRegistro.get('pais').hasError('required')">Pais es requerido</div>
+    </div>
+
+
+    <div class="form-group">
+        <input [ngClass]="{'is-invalid': formRegistro.get('password').errors && formRegistro.get('password').touched}" type="password" class="form-control" placeholder="Contraseña" formControlName="password">
+        <div class="invalid-feedback" *ngIf="formRegistro.get('password').hasError('required')">passwors es requerido</div>
+        <div class="invalid-feedback" *ngIf="formRegistro.get('password').hasError('minlength')">manimo 4 caracteres</div>
+        <div class="invalid-feedback" *ngIf="formRegistro.get('password').hasError('maxlength')">maximo 8 caracteres</div>
+    </div>
+    <div class="form-group">
+        <input [ngClass]="{'is-invalid': formRegistro.get('confirmPassword').errors && formRegistro.get('confirmPassword').touched ||
+        formRegistro.get('password').errors && formRegistro.get('password').touched ||
+        formRegistro.hasError('mismatch') && formRegistro.get('confirmPassword').touched}" type="password" class="form-control" placeholder="Contraseña" formControlName="confirmPassword">
+        <div class="invalid-feedback" *ngIf="formRegistro.get('confirmPassword').hasError('required')">confirmacion de password es requerido</div>
+        <div class="invalid-feedback" *ngIf="formRegistro.get('confirmPassword').hasError('minlength')">manimo 4 caracteres</div>
+        <div class="invalid-feedback" *ngIf="formRegistro.get('confirmPassword').hasError('maxlength')">maximo 8 caracteres</div>
+        <div class="invalid-feedback" *ngIf="formRegistro.hasError('mismatch')">Contraseñas no conciden</div>
     </div>
 
     <div class="form-group text-center">

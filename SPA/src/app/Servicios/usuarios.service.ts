@@ -17,7 +17,7 @@ export class UsuariosService {
     return this.http.get<Usuario[]>(environment.Urlapi + 'Usuario');
   }
 
-  ObtenerUsuario(id): Observable<Usuario> {
+  ObtenerUsuario(id): Observable<Usuario> { 
     return this.http.get<Usuario>(environment.Urlapi + 'Usuario/' + id );
   }
    EditarUsuario(id: number, usuario: Usuario): Observable<Usuario> {

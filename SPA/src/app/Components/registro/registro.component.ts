@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../../Servicios/auth.service';
 import { AlertasService } from '../../Servicios/alertas.service';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Usuario } from '../../model/Usuario';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,22 +12,48 @@ import { AlertasService } from '../../Servicios/alertas.service';
   styleUrls: ['./registro.component.css']
 })
 export class RegistroComponent implements OnInit {
-  model: any = {};
+  Usuario: Usuario;
+  formRegistro: FormGroup;
   @Output() cancelRegistro  = new EventEmitter();
   constructor(private authServicio: AuthService,
-              private alertasS: AlertasService) { }
+              private alertasS: AlertasService,
+              private fb: FormBuilder,
+              private router: Router) { }
 
   ngOnInit() {
+    this.CrearRegistroForm();
   }
 
-  Registrar(){
-    this.authServicio.Registar(this.model).subscribe(() => {
-     this.alertasS.exito('Registro de manera correcta');
+  CrearRegistroForm() {
+    this.formRegistro = this.fb.group({
+      genero: ['Masculino' , Validators.required],
+      nombre: ['' , Validators.required],
+      fechaNacimiento: [null, Validators.required],
+      alias: ['', Validators.required],
+      city: ['' , Validators.required],
+      pais: ['' , Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+      confirmPassword: ['', Validators.required]
+    }, {validators: this.compararPasswords});
+  }
+  compararPasswords(form: FormGroup) {
+    return form.get('password').value === form.get('confirmPassword').value ? null : {'mismatch': true};
+  }
+
+  Registrar() {
+   if (this.formRegistro.status) {
+    this.Usuario = Object.assign({}, this.formRegistro.value);
+    console.log(this.Usuario);
+    this.authServicio.Registar(this.Usuario).subscribe( () => {
+      this.alertasS.exito('se registro de manera correcta');
     }, error => {
-      console.log(error);
       this.alertasS.error(error);
+    }, () => {
+      this.authServicio.login(this.Usuario).subscribe( () => {
+        this.router.navigate(['/miembros']);
+      });
     });
-    console.log(this.model);
+   }
 
   }
   Cancelar() {

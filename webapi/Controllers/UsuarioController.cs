@@ -31,7 +31,7 @@ namespace webapi.Controllers
             var usariosReturn = _mapper.Map<IEnumerable<UsuarioLista>>(usuarios);
             return Ok(usariosReturn);
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id}" , Name = "obtenerUsuario")]
         public async Task<IActionResult> ObtenerUsuario(int id)
         {
             var usuario = await _repo.ObtenerUsuario(id);
