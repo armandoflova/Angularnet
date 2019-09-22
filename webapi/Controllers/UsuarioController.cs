@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using webapi.Data;
 using webapi.Dtos;
+using webapi.Helpers;
 
 namespace webapi.Controllers
 {
+    [ServiceFilter(typeof(ActividadUsuario))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]

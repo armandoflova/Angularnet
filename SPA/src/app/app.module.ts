@@ -1,5 +1,5 @@
 import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,10 @@ import {MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule,
    MatInputModule, MatDatepickerModule, MatNativeDateModule} from '@angular/material';
 import { FotoEditorComponent } from './Components/miembros/foto-editor/foto-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import {TimeAgoPipe} from 'time-ago-pipe';
+import { registerLocaleData } from '@angular/common';
+import locales from '@angular/common/locales/es-PE';
+registerLocaleData(locales);
 
 
 export function tokenGetter() {
@@ -48,7 +52,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     TarjetaMiembrosComponent,
     MiembrosDetalleComponent,
     EditarMiembroComponent,
-    FotoEditorComponent
+    FotoEditorComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
@@ -78,6 +83,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     })
     ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'es-PE' },
     ErrorInterceptorProvider,
     MiembrosDetalleResolver,
     MiembrosResolver,

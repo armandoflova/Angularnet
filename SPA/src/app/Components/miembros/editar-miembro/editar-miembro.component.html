@@ -20,11 +20,11 @@
                     </div>
                     <div>
                         <strong>Ultima Conexión:</strong>
-                        <p>{{usuario.ultimaConexion | date : 'dd/MM/yyyy'}}</p>
+                        <p>{{usuario.ultimaConexion | timeAgo}}</p>
                     </div>
                     <div>
                         <strong>Miembro hace:</strong>
-                        <p>{{usuario.creado | date : 'dd/MM/yyyy' }}</p>
+                        <p>{{usuario.creado | date : 'mediumDate' }}</p>
                     </div>
                 </div>
                 <div class="card-footer">
