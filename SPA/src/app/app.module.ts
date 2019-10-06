@@ -11,7 +11,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import { InicioComponent } from './Components/inicio/inicio.component';
 import { RegistroComponent } from './Components/registro/registro.component';
 import { ErrorInterceptorProvider } from './Servicios/auth.interceptor';
-import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule, PaginationModule, ButtonsModule} from 'ngx-bootstrap';
 import { MiembrosListaComponent } from './Components/miembros/miembros-lista/miembros-lista.component';
 import { ListasComponent } from './Components/listas/listas.component';
 import { MensajesComponent } from './Components/mensajes/mensajes.component';
@@ -73,6 +73,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MatSortModule,
     TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
     JwtModule.forRoot({
       config: {
         // tslint:disable-next-line: object-literal-shorthand

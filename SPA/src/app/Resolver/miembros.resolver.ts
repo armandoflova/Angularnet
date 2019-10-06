@@ -9,13 +9,14 @@ import { catchError } from 'rxjs/Operators';
 
 @Injectable()
 export class MiembrosResolver implements Resolve<Usuario[]> {
-
+    numeroPagina = 1;
+    tamanoPagina = 5;
     constructor(private usuarioServicio: UsuariosService,
                 private router: Router,
                 private alertas: AlertasService) {}
 
 resolve(route: ActivatedRouteSnapshot): Observable<Usuario[]> {
-    return this.usuarioServicio.ObtenerUsuarios()
+    return this.usuarioServicio.ObtenerUsuarios(this.numeroPagina, this.tamanoPagina)
     .pipe( catchError (error => {
         this.alertas.error('Hubo un error al cargar los datos');
         this.router.navigate(['/home']);

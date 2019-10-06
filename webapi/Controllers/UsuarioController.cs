@@ -27,10 +27,17 @@ namespace webapi.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> ObtenerUsuarios()
+        public async Task<IActionResult> ObtenerUsuarios([FromQuery]ParametrosUsuarios parametrosUsuarios)
         {
-            var usuarios = await _repo.ObtenerUsarios();
+            var idUsuarioActual = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var usuarioActual = await _repo.ObtenerUsuario(idUsuarioActual);
+            parametrosUsuarios.Id = idUsuarioActual;
+            if (string.IsNullOrEmpty(parametrosUsuarios.Genero)){
+                parametrosUsuarios.Genero = usuarioActual.Genero == "Masculino" ? "Femenino" : "Masculino";
+            }
+            var usuarios = await _repo.ObtenerUsuarios(parametrosUsuarios);
             var usariosReturn = _mapper.Map<IEnumerable<UsuarioLista>>(usuarios);
+            Response.AgregarPaginacion(usuarios.PaginaActual, usuarios.TamanoPagina,usuarios.Total, usuarios.TotalPaginas);
             return Ok(usariosReturn);
         }
         [HttpGet("{id}" , Name = "obtenerUsuario")]

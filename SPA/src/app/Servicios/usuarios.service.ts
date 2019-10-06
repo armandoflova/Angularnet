@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../model/Usuario';
 import { environment } from '../../environments/environment';
+import { ResultadoPagina } from '../model/Paginacion';
+import { map, tap} from 'rxjs/Operators';
 
 
 
@@ -13,11 +15,30 @@ export class UsuariosService {
 
   constructor(private http: HttpClient) { }
 
-  ObtenerUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(environment.Urlapi + 'Usuario');
+  ObtenerUsuarios(pagina? , tamano?, usuarioparametros?): Observable<ResultadoPagina<Usuario[]>> {
+    const resultPagina: ResultadoPagina<Usuario[]> = new ResultadoPagina<Usuario[]>();
+    let params = new HttpParams();
+    if (pagina != null && tamano != null) {
+     params = params.append('NumeroPaginas', pagina);
+     params = params.append('TamanoPagina', tamano);
+    }
+    if (usuarioparametros != null ) {
+      params = params.append('Genero' , usuarioparametros.genero);
+      params = params.append('MinEdad' , usuarioparametros.minEdad);
+      params = params.append('MaxEdad' , usuarioparametros.maxEdad);
+      params = params.append('ordenarPor' , usuarioparametros.ordenarPor);
+    }
+    return this.http.get<Usuario[]>(environment.Urlapi + 'Usuario', { params, observe: 'response'}).pipe
+    (map(response => {
+      resultPagina.resultado = response.body;
+      if ( response.headers.get('paginacion') != null) {
+        resultPagina.paginacion = JSON.parse(response.headers.get('paginacion'));
+      }
+      return resultPagina;
+    }));
   }
 
-  ObtenerUsuario(id): Observable<Usuario> { 
+  ObtenerUsuario(id: number): Observable<Usuario> {
     return this.http.get<Usuario>(environment.Urlapi + 'Usuario/' + id );
   }
    EditarUsuario(id: number, usuario: Usuario): Observable<Usuario> {
