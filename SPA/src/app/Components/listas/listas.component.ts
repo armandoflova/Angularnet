@@ -1,40 +1,45 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatPaginatorModule } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../model/Usuario';
 import { UsuariosService } from '../../Servicios/usuarios.service';
-import {MatSort} from '@angular/material/sort';
-import {MatPaginator} from '@angular/material';
+import { Paginacion, ResultadoPagina } from 'src/app/model/Paginacion';
+import { ActivatedRoute } from '@angular/router';
+import { AlertasService } from 'src/app/Servicios/alertas.service';
+
 
 @Component({
   selector: 'app-listas',
   templateUrl: './listas.component.html',
   styleUrls: ['./listas.component.css']
 })
-export class ListasComponent implements OnInit , AfterViewInit {
-  displayedColumns: string[] = ['nombre', 'genero', 'edad', 'alias', 'city' , 'pais'];
-  dataSource = new MatTableDataSource<Usuario>();
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild (MatPaginator, { static : true }) paginador: MatPaginator;
-  constructor(private usuarioServicios: UsuariosService) { }
-
+export class ListasComponent implements OnInit  {
+  Usuarios: Usuario[];
+  parametrosUsuario: any = {};
+  paginacion: Paginacion;
+  likeesparams: string;
+  constructor(private usuarioServicios: UsuariosService,
+              private router: ActivatedRoute,
+              private alertas: AlertasService) { }
   ngOnInit() {
-
-    this.ObtenerUsuarios();
-  }
-   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-   }
-
-  ObtenerUsuarios() {
-    this.usuarioServicios.ObtenerUsuarios().subscribe( (resultado: any) => {
-      this.dataSource = resultado;
-      console.log(this.dataSource);
+    this.router.data.subscribe(data => {
+    this.Usuarios = data['usuarios'].resultado;
+    this.paginacion = data['usuarios'].paginacion;
+    this.likeesparams = 'Likers';
+    console.log(this.paginacion);
     });
-  }
-  applyFilter(texto: string) {
-    this.dataSource.filter = texto.trim().toLowerCase();
-    if ( this .dataSource.paginator) {
-      this .dataSource.paginator.firstPage ();
-   }
-  }
+ }
+
+ cargarUsuarios() {
+  this.usuarioServicios.ObtenerUsuarios(this.paginacion.paginaActaul, this.paginacion.itemsPorPagina, null , this.likeesparams)
+  .subscribe( (res: ResultadoPagina<Usuario[]>) => {
+    this.Usuarios = res.resultado;
+    this.paginacion = res.paginacion;
+  }, error => {
+      this.alertas.error(error);
+  });
+}
+
+cambioPagina(event: any): void{
+  this.paginacion.paginaActaul = event.page;
+  this.cargarUsuarios();
+}
 }

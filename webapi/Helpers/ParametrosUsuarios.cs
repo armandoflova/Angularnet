@@ -16,5 +16,7 @@ namespace webapi.Helpers
         public int MinEdad { get; set; } = 18;
         public int MaxEdad { get; set; } = 99;
         public string ordenarPor { get; set; }
+        public bool Likees { get; set; } = false;
+        public bool Likers { get; set; } = false;
     }
 }

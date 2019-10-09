@@ -28,6 +28,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { registerLocaleData } from '@angular/common';
 import locales from '@angular/common/locales/es-PE';
+import { ListasResolver } from './Resolver/Listas.Resolver';
 registerLocaleData(locales);
 
 
@@ -89,7 +90,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     ErrorInterceptorProvider,
     MiembrosDetalleResolver,
     MiembrosResolver,
-     MiembrosEditarResolve,
+    MiembrosEditarResolve,
+    ListasResolver,
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]

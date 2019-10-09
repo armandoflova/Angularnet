@@ -14,5 +14,6 @@ namespace webapi.Data
         Task<Usuario> ObtenerUsuario(int id);
         Task<Foto> ObtenerFoto(int id);
         Task<Foto> ObtenerFotoActual(int idUsario);
+        Task<Like> ObtenerLike( int idUsuario, int recipienteId);
     }
 }

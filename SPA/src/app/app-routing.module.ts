@@ -12,9 +12,7 @@ import { MiembrosResolver } from './Resolver/miembros.resolver';
 import { EditarMiembroComponent } from './Components/miembros/editar-miembro/editar-miembro.component';
 import { MiembrosEditarResolve } from './Resolver/miembros-editar.resolver';
 import { GuardarCambiosGuard } from './Guard/guardar-cambios.guard';
-
-
-
+import { ListasResolver } from './Resolver/Listas.Resolver';
 
 
 const routes: Routes = [
@@ -29,7 +27,7 @@ const routes: Routes = [
       {path: 'editar' , component: EditarMiembroComponent, resolve: {usuario: MiembrosEditarResolve},
        canDeactivate: [GuardarCambiosGuard] },
       {path: 'mensajes' , component: MensajesComponent},
-      {path: 'listas' , component: ListasComponent}
+      {path: 'listas' , component: ListasComponent , resolve: {usuarios: ListasResolver}}
     ]
   },
   {path: '**' , redirectTo: 'home' , pathMatch: 'full'}

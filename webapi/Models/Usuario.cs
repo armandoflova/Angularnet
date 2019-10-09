@@ -21,6 +21,8 @@ namespace webapi.Models
         public string  City { get; set; }
         public string Pais { get; set; }
         public ICollection<Foto> Fotos { get; set; }
+        public ICollection<Like> Likers { get; set; }
+        public ICollection<Like> Likees { get; set; }
 
     }
 }

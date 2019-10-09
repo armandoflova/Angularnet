@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using webapi.Data;
 using webapi.Dtos;
 using webapi.Helpers;
+using webapi.Models;
 
 namespace webapi.Controllers
 {
@@ -62,6 +63,39 @@ namespace webapi.Controllers
                 return NoContent();
  
             throw new Exception($"Updating user {id} failed on save");
+        }
+        [HttpPost("{id}/Like/{recipienteId}")]
+
+        public async Task<IActionResult> LikeUsuario( int id, int recipienteid)
+        {
+              if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+        
+         var like = await _repo.ObtenerLike(id, recipienteid);
+
+         if(like != null)
+            {
+              return BadRequest("ya le dio like a este usuario");
+            }
+         if( await _repo.ObtenerUsuario(recipienteid) == null)
+         {
+             return NotFound();
+         }
+        
+          like = new Like
+          {
+              LikerId  = id,
+              LikeeId = recipienteid
+          };
+
+          _repo.Agregar<Like>(like);
+
+          if(await _repo.GuardarTodo())
+            return Ok();
+        
+         return BadRequest("Fallo no se pudo dar me me gusta a este usuario");
         }
     }
 }

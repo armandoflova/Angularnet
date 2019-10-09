@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +55,16 @@ namespace webapi.Data
             var usuarios = _context.Usuarios.Include(f => f.Fotos).OrderByDescending(u => u.UltimaConexion).AsQueryable();
              usuarios = usuarios.Where(u => u.Id != parametosUsuario.Id);
              usuarios = usuarios.Where(u => u.Genero == parametosUsuario.Genero);
+             if(parametosUsuario.Likers)
+             {
+                var usuarioLikers = await obtenerUsuarioLikes(parametosUsuario.Id, parametosUsuario.Likers);
+                usuarios = usuarios.Where(u => usuarioLikers.Contains(u.Id));
+             } 
+             if(parametosUsuario.Likees) 
+             {
+                var usuarioLikees = await obtenerUsuarioLikes(parametosUsuario.Id, parametosUsuario.Likers);
+                usuarios = usuarios.Where(u => usuarioLikees.Contains(u.Id));
+             }
             if(parametosUsuario.MinEdad != 18 || parametosUsuario.MaxEdad != 99) {
                 var minDob = DateTime.Today.AddYears(-parametosUsuario.MaxEdad -1);
                 var maxDob = DateTime.Today.AddYears(-parametosUsuario.MinEdad);
@@ -74,6 +85,27 @@ namespace webapi.Data
                 }
             }
             return await ListaPagina<Usuario>.CrearAsync(usuarios ,parametosUsuario.NumeroPaginas, parametosUsuario.TamanoPagina);
+        }
+
+        public async Task<Like> ObtenerLike(int idUsuario, int recipienteId)
+        {
+            return await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == idUsuario && u.LikeeId == recipienteId);
+        }
+
+        private async Task<IEnumerable<int>> obtenerUsuarioLikes(int id, bool likers)
+        {
+            var usuario = await _context.Usuarios
+            .Include( u => u.Likers).
+            Include(u => u.Likees).FirstOrDefaultAsync(u => u.Id == id);
+
+            if( likers)
+            {
+                return usuario.Likers.Where(u => u.LikeeId == id).Select(i => i.LikerId);
+            }
+            else
+            {
+                return usuario.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
+            }
         }
     }
 }

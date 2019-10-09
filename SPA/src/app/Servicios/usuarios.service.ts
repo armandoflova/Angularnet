@@ -15,7 +15,7 @@ export class UsuariosService {
 
   constructor(private http: HttpClient) { }
 
-  ObtenerUsuarios(pagina? , tamano?, usuarioparametros?): Observable<ResultadoPagina<Usuario[]>> {
+  ObtenerUsuarios(pagina? , tamano?, usuarioparametros?, likeesparams?): Observable<ResultadoPagina<Usuario[]>> {
     const resultPagina: ResultadoPagina<Usuario[]> = new ResultadoPagina<Usuario[]>();
     let params = new HttpParams();
     if (pagina != null && tamano != null) {
@@ -28,6 +28,14 @@ export class UsuariosService {
       params = params.append('MaxEdad' , usuarioparametros.maxEdad);
       params = params.append('ordenarPor' , usuarioparametros.ordenarPor);
     }
+    if (likeesparams === 'Likers') {
+      params = params.append('Likers' , 'true' );
+    }
+
+    if (likeesparams === 'Likees') {
+      params = params.append('Likees' , 'true' );
+    }
+
     return this.http.get<Usuario[]>(environment.Urlapi + 'Usuario', { params, observe: 'response'}).pipe
     (map(response => {
       resultPagina.resultado = response.body;
@@ -45,10 +53,14 @@ export class UsuariosService {
     return this.http.put<Usuario>(environment.Urlapi + 'Usuario/' +  id, usuario );
   }
   FotoPrincipal(idUsuario: number, id: number): Observable<any> {
-    return this.http.post(environment.Urlapi + 'usuarios/' + idUsuario + '/fotos/' + id + '/esPrincipal' , {});
+    return this.http.post(environment.Urlapi + 'Usuario/' + idUsuario + '/fotos/' + id + '/esPrincipal' , {});
   }
 
   EliminarFoto(idUsuario: number , id: number){
-    return this.http.delete(environment.Urlapi + 'usuarios/' + idUsuario + '/fotos/' + id);
+    return this.http.delete(environment.Urlapi + 'Usuario/' + idUsuario + '/fotos/' + id);
+  }
+
+  darLike(id: number, recipientId: number){
+    return this.http.post(environment.Urlapi + 'Usuario/' + id + '/Like/' + recipientId , {});
   }
 }

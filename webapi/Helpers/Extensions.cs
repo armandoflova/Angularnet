@@ -7,10 +7,10 @@ namespace webapi.Helpers
 {
     public static class Extensions
     {
-        public static void AplicationError(this HttpResponse response, string mensaje){
-            response.Headers.Add("Aplicacion-Error", mensaje);
-            response.Headers.Add("Access-Control-Expose-Headers", "Aplicacion-Error");
-            response.Headers.Add("Access-Control-Expose-Headers", "*");
+        public static void AplicationError(this HttpResponse response, string message){
+            response.Headers.Add("Application-Error", message);
+            response.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
         }
 
         public static void AgregarPaginacion(this HttpResponse response, int paginaActual, int itemsXPagina, int totalItems, int totalpaginas)
