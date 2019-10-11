@@ -18,7 +18,22 @@ namespace api
 {
     public class Startup
     {
-       
+         public void ConfigureDevelopmentServices(IServiceCollection services)
+       {
+             services.AddDbContext<DataContext>( x =>{
+                 x.UseLazyLoadingProxies();
+                 x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+             });
+             ConfigureServices(services);
+       }
+       public void ConfigureProductionServices(IServiceCollection services)
+       {
+             services.AddDbContext<DataContext>( x =>{
+                 x.UseLazyLoadingProxies();
+                 x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+             });
+             ConfigureServices(services);
+       }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -76,8 +91,16 @@ namespace api
             app.UseHttpsRedirection();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader() );
             app.UseAuthentication();
-            app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+           // app.UseHttpsRedirection();
+            app.UseMvc( routes => {
+
+                routes.MapSpaFallbackRoute(
+                    name: "spa-fallback",
+                    defaults: new {controller = "Fallback" , action = "Index"}
+                );
+            });
         
         }
     }

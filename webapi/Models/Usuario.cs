@@ -20,11 +20,11 @@ namespace webapi.Models
         public string Intereses { get; set; }
         public string  City { get; set; }
         public string Pais { get; set; }
-        public ICollection<Foto> Fotos { get; set; }
-        public ICollection<Like> Likers { get; set; }
-        public ICollection<Like> Likees { get; set; }
-        public ICollection<Mensajes> MensajesEnviados { get; set; }
-        public ICollection<Mensajes> MensajesRecibidos { get; set; }
+        public virtual ICollection<Foto> Fotos { get; set; }
+        public virtual ICollection<Like> Likers { get; set; }
+        public virtual ICollection<Like> Likees { get; set; }
+        public virtual ICollection<Mensajes> MensajesEnviados { get; set; }
+        public virtual ICollection<Mensajes> MensajesRecibidos { get; set; }
 
     }
 }

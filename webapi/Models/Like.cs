@@ -4,7 +4,7 @@ namespace webapi.Models
     {
         public int LikerId { get; set; }
         public int LikeeId { get; set; } 
-        public Usuario Liker { get; set; }
-        public Usuario Likee { get; set; }
+        public virtual Usuario Liker { get; set; }
+        public virtual Usuario Likee { get; set; }
     }
 }

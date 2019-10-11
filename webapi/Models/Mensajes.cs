@@ -6,9 +6,9 @@ namespace webapi.Models
     {
         public int Id { get; set; }
         public int RemitenteId { get; set; }
-        public Usuario Remitente { get; set; }
+        public virtual Usuario Remitente { get; set; }
         public int DestinatarioId { get; set; }
-        public Usuario Destinatario { get; set; }
+        public virtual Usuario Destinatario { get; set; }
         public string Contenido { get; set; }
         public bool EstaLeido { get; set; }
         public DateTime? FechaLectura { get; set; }

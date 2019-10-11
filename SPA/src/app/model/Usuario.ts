@@ -7,7 +7,7 @@ export interface Usuario  {
     edad: number;
     alias: string;
     creado: Date;
-    ultimaConexion: Date;
+    ultimaConexion: any;
     introduccion?: string;
     buscarPor?: string;
     intereses?: string;

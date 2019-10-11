@@ -34,7 +34,7 @@ namespace webapi.Data
 
         public async Task<Usuario> ObtenerUsuario(int id)
         {
-            var usuario =await _context.Usuarios.Include(F => F.Fotos).FirstOrDefaultAsync(u => u.Id == id);
+            var usuario =await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
             return usuario;
         }
 
@@ -52,7 +52,7 @@ namespace webapi.Data
 
         public async Task<ListaPagina<Usuario>> ObtenerUsuarios(ParametrosUsuarios parametosUsuario)
         {
-            var usuarios = _context.Usuarios.Include(f => f.Fotos).OrderByDescending(u => u.UltimaConexion).AsQueryable();
+            var usuarios = _context.Usuarios.OrderByDescending(u => u.UltimaConexion).AsQueryable();
              usuarios = usuarios.Where(u => u.Id != parametosUsuario.Id);
              usuarios = usuarios.Where(u => u.Genero == parametosUsuario.Genero);
              if(parametosUsuario.Likers)
@@ -94,9 +94,8 @@ namespace webapi.Data
 
         private async Task<IEnumerable<int>> obtenerUsuarioLikes(int id, bool likers)
         {
-            var usuario = await _context.Usuarios
-            .Include( u => u.Likers).
-            Include(u => u.Likees).FirstOrDefaultAsync(u => u.Id == id);
+            var usuario = await _context.Usuarios.
+            FirstOrDefaultAsync(u => u.Id == id);
 
             if( likers)
             {
@@ -116,10 +115,7 @@ namespace webapi.Data
 
         public async Task<ListaPagina<Mensajes>> ObtenerMensajesPorUsuario(MensajeParams mensajeParams)
         {
-            var mensajes = _context.Mensajes.Include(u =>u.Remitente)
-                            .ThenInclude(f => f.Fotos)
-                            .Include(u =>u.Remitente).ThenInclude(f => f.Fotos)
-                            .Include(u => u.Destinatario).ThenInclude(f => f.Fotos).AsQueryable();
+            var mensajes = _context.Mensajes.AsQueryable();
             switch(mensajeParams.TipoContenido)
                 {
                     case "Inbox":
@@ -140,9 +136,7 @@ namespace webapi.Data
         public async Task<IEnumerable<Mensajes>> ObtenerMensajesLeido(int usuarioId, int remitenteId)
         {
             var mensajes =await _context.Mensajes.Include(u =>u.Remitente)
-                            .ThenInclude(f => f.Fotos)
-                            .Include(u =>u.Remitente).ThenInclude(f => f.Fotos).
-                            Where(m => m.RemitenteId == usuarioId && m.RemitenteElimina == false && m.DestinatarioId == remitenteId 
+                            .Where(m => m.RemitenteId == usuarioId && m.RemitenteElimina == false && m.DestinatarioId == remitenteId 
                             || m.DestinatarioId ==usuarioId && m.DestinatarioElimina == false && m.RemitenteId == remitenteId)
                             .OrderByDescending(m => m.FechaEnvio).ToListAsync();
             return mensajes;

@@ -11,7 +11,7 @@ namespace webapi.Models
         public bool EsPrincipal {get; set;}
         public string PublicId { get; set; }
 
-        public Usuario Usuario {get; set;}
+        public virtual Usuario Usuario {get; set;}
         public int UsuarioID { get; set; }
     }
 }
