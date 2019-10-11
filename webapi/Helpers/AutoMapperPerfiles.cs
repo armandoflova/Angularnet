@@ -24,6 +24,11 @@ namespace webapi.Helpers
             CreateMap<Foto, fotoReturnRepo>();
             CreateMap<FotosCreacionDto, Foto>();
             CreateMap<UsuarioRegistro, Usuario>();
+            CreateMap<MensajeCreado, Mensajes>().ReverseMap();
+            CreateMap<Mensajes, MensajeReturn>()
+                .ForMember(r => r.RemitenteUrl, opt => opt.MapFrom(u => u.Remitente.Fotos.FirstOrDefault(f => f.EsPrincipal).Url))
+                .ForMember(d => d.DestinatarioUrl, opt => opt.MapFrom(u => u.Destinatario.Fotos.FirstOrDefault(f => f.EsPrincipal).Url));
+                
         }
     }
 }

@@ -11,6 +11,7 @@ namespace webapi.Data
         public DbSet<Usuario> Usuarios {get; set;}
         public DbSet<Foto> Fotos {get; set;}
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Mensajes> Mensajes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,6 +28,16 @@ namespace webapi.Data
                 .HasOne(u => u.Liker)
                 .WithMany(u => u.Likees)   
                 .HasForeignKey( u => u.LikerId)
+                .OnDelete(DeleteBehavior.Restrict);
+            
+            builder.Entity<Mensajes>()
+                .HasOne(u => u.Remitente)
+                .WithMany(u => u.MensajesEnviados)
+                .OnDelete(DeleteBehavior.Restrict);
+
+             builder.Entity<Mensajes>()
+                .HasOne(u => u.Destinatario)
+                .WithMany(u => u.MensajesRecibidos)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

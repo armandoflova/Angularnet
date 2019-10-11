@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-body">
+        <div *ngIf="Mensajes?.length === 0">
+            <p>No tiene mensajes ... </p>
+        </div>
+        <ul class="chat">
+            <li *ngFor="let mensaje of Mensajes">
+                <div *ngIf="mensaje.remitenteId == recipienteId">
+                    <span class="chat-img float-left">
+                    <img src="{{mensaje.remitenteUrl}}" alt="{{mensaje.remintenteNombre}}" class="rounded-circle">
+                </span>
+                    <div class="chat-body">
+                        <div class="header">
+                            <strong class="primary-font float-left">{{mensaje.remintenteNombre}}</strong>
+                            <small class="text-muted ">
+                            <span class="fa fa-clock-o" >{{mensaje.fechaEnvio | timeAgo}}</span>
+                        </small>
+                        </div>
+                        <p>{{mensaje.contenido}}</p>
+                    </div>
+                </div>
+
+                <div *ngIf="mensaje.remitenteId != recipienteId">
+                    <span class="chat-img float-right">
+                    <img src="{{mensaje.remitenteUrl}}" alt="{{mensaje.remintenteNombre}}" class="rounded-circle">
+                </span>
+                    <div class="chat-body">
+                        <div class="header">
+                            <small class="text-muted">
+                            <span class="fa fa-clock-o" >{{mensaje.fechaEnvio | timeAgo}}</span>
+                            <span  *ngIf="!mensaje.estaLeido" class="text-danger" >(No Leido)</span>
+                            <span  *ngIf="mensaje.estaLeido" class="text-success" >(Leido {{mensaje.fechaLectura | timeAgo}})</span>
+                        </small>
+                            <strong class="primary-font float-right">{{mensaje.remintenteNombre}}</strong>
+                        </div>
+                        <p>{{mensaje.contenido}}</p>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer">
+        <form #mensajeForm="ngForm" (ngSubmit)="enviarMensaje()" autocomplete="off">
+            <div class="input-group">
+                <input type="text" required class="form-control input-sm" placeholder="enviar un mensaje privado" name="contenido" #contenido [(ngModel)]="newMensaje.contenido">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" [disabled]="!mensajeForm.valid">Enviar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

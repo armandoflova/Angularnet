@@ -1,1 +1,56 @@
-<p>mensajes works!</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="btn-group">
+            <button class="btn btn-primary" [(ngModel)]="TipoMensaje" btnRadio="noLeido" (click)="cargarMensajes()">
+          <i class="fa fa-envelope"></i> No Leidos
+        </button>
+            <button class="btn btn-primary" [(ngModel)]="TipoMensaje" btnRadio="Inbox" (click)="cargarMensajes()">
+          <i class="fa fa-envelope-open"></i> Enviados
+        </button>
+            <button class="btn btn-primary" [(ngModel)]="TipoMensaje" btnRadio="Outbox" (click)="cargarMensajes()">
+          <i class="fa fa-paper-plane"></i> Recibidos
+        </button>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="mensajes.length == 0">
+        <h3>No hay Mensajes</h3>
+    </div>
+
+    <div class="row" *ngIf="mensajes.length > 0">
+        <table class="table table-hover" style="cursor: pointer">
+            <tr>
+                <th style="width: 40%">Mensaje</th>
+                <th style="width: 20%">Enviado / A</th>
+                <th style="width: 20%">Entregado</th>
+                <th style="width: 20%"></th>
+            </tr>
+            <tr *ngFor="let mensaje of mensajes" [routerLink]="['/miembros', 
+            mensaje.contenido == 'Outbox' ? mensaje.destinatarioId : mensaje.remitenteId]" [queryParams]="{tab: 3}">
+                <td>{{mensaje.contenido}}</td>
+                <td>
+                    <div *ngIf="mensaje.contenido != 'Outbox'">
+                        <img src={{mensaje?.remitenteUrl}} class="img-circle rounded-circle mt-1">
+                        <strong>{{mensaje.remintenteNombre}}</strong>
+                    </div>
+                    <div *ngIf="mensaje.contenido == 'Outbox'">
+                        <img src={{mensaje?.destinatarioId}} class="img-circle rounded-circle mt-1">
+                        <strong>{{mensaje.destinatarioNombre}}</strong>
+                    </div>
+                </td>
+                <td>{{mensaje.fechaEnvio | timeAgo}}</td>
+                <td>
+                    <button class="btn btn-danger" (click)="$event.stopPropagation()" (click)="eliminarMensaje(mensaje.id)">Eliminar</button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+<div class="d-flex justify-content-center">
+    <pagination [boundaryLinks]="true" [totalItems]="paginacion.itemsTotal" [itemsPerPage]="paginacion.itemsPorPagina" [(ngModel)]="paginacion.paginaActaul" (pageChanged)="cambioPagina($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;">
+    </pagination>
+</div>

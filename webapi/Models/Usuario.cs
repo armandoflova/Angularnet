@@ -23,6 +23,8 @@ namespace webapi.Models
         public ICollection<Foto> Fotos { get; set; }
         public ICollection<Like> Likers { get; set; }
         public ICollection<Like> Likees { get; set; }
+        public ICollection<Mensajes> MensajesEnviados { get; set; }
+        public ICollection<Mensajes> MensajesRecibidos { get; set; }
 
     }
 }

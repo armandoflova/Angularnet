@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { MiembrosListaComponent } from './Components/miembros/miembros-lista/miembros-lista.component';
 import { MensajesComponent } from './Components/mensajes/mensajes.component';
 import { ListasComponent } from './Components/listas/listas.component';
@@ -13,6 +12,7 @@ import { EditarMiembroComponent } from './Components/miembros/editar-miembro/edi
 import { MiembrosEditarResolve } from './Resolver/miembros-editar.resolver';
 import { GuardarCambiosGuard } from './Guard/guardar-cambios.guard';
 import { ListasResolver } from './Resolver/Listas.Resolver';
+import { MensajesResolver } from './Resolver/mensajes.resolver';
 
 
 const routes: Routes = [
@@ -26,7 +26,7 @@ const routes: Routes = [
       {path: 'miembros/:id' , component: MiembrosDetalleComponent , resolve: {usuario: MiembrosDetalleResolver}},
       {path: 'editar' , component: EditarMiembroComponent, resolve: {usuario: MiembrosEditarResolve},
        canDeactivate: [GuardarCambiosGuard] },
-      {path: 'mensajes' , component: MensajesComponent},
+      {path: 'mensajes' , component: MensajesComponent , resolve: {mensajes: MensajesResolver}},
       {path: 'listas' , component: ListasComponent , resolve: {usuarios: ListasResolver}}
     ]
   },

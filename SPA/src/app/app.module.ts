@@ -29,6 +29,8 @@ import {TimeAgoPipe} from 'time-ago-pipe';
 import { registerLocaleData } from '@angular/common';
 import locales from '@angular/common/locales/es-PE';
 import { ListasResolver } from './Resolver/Listas.Resolver';
+import { MensajesResolver } from './Resolver/mensajes.resolver';
+import { MiembrosMensajesComponent } from './Components/miembros/miembros-mensajes/miembros-mensajes.component';
 registerLocaleData(locales);
 
 
@@ -54,7 +56,8 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MiembrosDetalleComponent,
     EditarMiembroComponent,
     FotoEditorComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    MiembrosMensajesComponent
   ],
   imports: [
     BrowserModule,
@@ -92,6 +95,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
     MiembrosResolver,
     MiembrosEditarResolve,
     ListasResolver,
+    MensajesResolver,
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]

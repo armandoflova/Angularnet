@@ -107,5 +107,45 @@ namespace webapi.Data
                 return usuario.Likees.Where(u => u.LikerId == id).Select(i => i.LikeeId);
             }
         }
+
+        public async Task<Mensajes> ObtenerMensaje(int id)
+        {
+           var mensaje = await _context.Mensajes.FirstOrDefaultAsync(m => m.Id == id);
+           return mensaje;
+        }
+
+        public async Task<ListaPagina<Mensajes>> ObtenerMensajesPorUsuario(MensajeParams mensajeParams)
+        {
+            var mensajes = _context.Mensajes.Include(u =>u.Remitente)
+                            .ThenInclude(f => f.Fotos)
+                            .Include(u =>u.Remitente).ThenInclude(f => f.Fotos)
+                            .Include(u => u.Destinatario).ThenInclude(f => f.Fotos).AsQueryable();
+            switch(mensajeParams.TipoContenido)
+                {
+                    case "Inbox":
+                        mensajes = mensajes.Where(u => u.RemitenteId == mensajeParams.UsuarioId && u.RemitenteElimina == false);
+                    break;
+                    case "Outbox":
+                        mensajes = mensajes.Where(u => u.DestinatarioId == mensajeParams.UsuarioId && u.DestinatarioElimina == false);
+                    break;
+                    default:
+                     mensajes = mensajes.Where(u => u.RemitenteId == mensajeParams.UsuarioId &&  u.RemitenteElimina == false && u.EstaLeido == false);
+                    break;
+                }
+            mensajes = mensajes.OrderByDescending(m => m.FechaEnvio);
+
+            return await ListaPagina<Mensajes>.CrearAsync(mensajes , mensajeParams.NumeroPaginas, mensajeParams.TamanoPagina);
+        }
+
+        public async Task<IEnumerable<Mensajes>> ObtenerMensajesLeido(int usuarioId, int remitenteId)
+        {
+            var mensajes =await _context.Mensajes.Include(u =>u.Remitente)
+                            .ThenInclude(f => f.Fotos)
+                            .Include(u =>u.Remitente).ThenInclude(f => f.Fotos).
+                            Where(m => m.RemitenteId == usuarioId && m.RemitenteElimina == false && m.DestinatarioId == remitenteId 
+                            || m.DestinatarioId ==usuarioId && m.DestinatarioElimina == false && m.RemitenteId == remitenteId)
+                            .OrderByDescending(m => m.FechaEnvio).ToListAsync();
+            return mensajes;
+        }
     }
 }
